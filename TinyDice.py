@@ -304,11 +304,18 @@ class Dice:
 			rollResult.damage[self.damageType.name] += self.currentRoll
 	
 	def combosWith(self, other):
-		return self.valueMultiplier == other.valueMultiplier \
-			and self.damageType == other.damageType \
-			and self.values[-1] == other.values[-1] \
-			and self.isMultiplierDice == other.isMultiplierDice \
-			and (self.isMultiplierDice or self.values[0] == 1 and other.values[0] == 1)
+		if self.valueMultiplier != other.valueMultiplier:
+			return False
+		if self.damageType != other.damageType:
+			return False
+		if self.values[-1] != other.values[-1]:
+			return False
+		if self.isMultiplierDice != other.isMultiplierDice:
+			return False
+		if self.isMultiplierDice:
+			return self.values[0] == other.values[0]
+		else:
+			return self.values[0] == 1 and other.values[0] == 1
 	
 	def comboValue(self, diceInvolved):
 		if self.isMultiplierDice:
